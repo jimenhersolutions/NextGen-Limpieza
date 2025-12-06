@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+ <html lang="es">
+ <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NextGen | La Nueva Era de la Limpieza</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+        }
+        /* Animaciones Personalizadas */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            will-change: opacity, visibility;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: none;
+        }
+        /* Efecto de onda en el Hero */
+        .hero-bg {
+            background: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-shape {
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+            transform: rotate(180deg);
+        }
+        .hero-shape svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 60px;
+        }
+        .hero-shape .shape-fill {
+            fill: #FFFFFF;
+        }
+        /* Scroll Horizontal Limpio */
+        .hide-scroll-bar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scroll-bar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        /* Tarjetas de Producto */
+        .product-card {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        /* Altura de Imagen de Producto - MODIFICADA para forzar un alto consistente */
+        .product-image {
+            height: 200px; /* NUEVO: Altura fija para que todas las tarjetas se vean iguales */
+            width: 100%;
+            object-fit: contain; /* Asegura que la imagen completa sea visible sin recortar */
+            background-color: #ffffff;
+            padding: 10px; 
+            border-top-left-radius: 0.75rem; 
+            border-top-right-radius: 0.75rem; 
+        }
+        /* Botones Flotantes */
+        .floating-container {
+            position: fixed;
+            bottom: 22px;
+            right: 22px;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .floating-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            color: white;
+            font-size: 28px;
+            text-decoration: none;
+        }
+        .btn-whatsapp {
+            background-color: #25D366;
+            animation: pulse-green 2s infinite;
+        }
+        .btn-phone {
+            background-color: #3b82f6;
+        }
+        .floating-btn:hover {
+            transform: scale(1.1);
+        }
+        @keyframes pulse-green {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+    </style>
+ </head>
+ <body class="bg-gray-50 text-gray-800">
+    <!-- Navegación -->
+    <nav class="bg-white shadow-md fixed w-full z-50 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center gap-2">
+                        <i class="fa-solid fa-sparkles text-blue-500 text-2xl"></i>
+                        <span class="font-bold text-2xl tracking-tighter text-blue-900">Next<span class="text-blue-500">Gen</span></span>
+                    </div>
+                </div>
+                <div class="hidden md:flex space-x-6 items-center">
+                    <a href="#inicio" class="text-gray-600 hover:text-blue-500 transition font-medium">Inicio</a>
+                    <a href="#productos" class="text-gray-600 hover:text-blue-500 transition font-medium">Productos</a>
+                    <a href="#vision" class="text-gray-600 hover:text-blue-500 transition font-medium">Visión</a>
+                    <a href="#mision" class="text-gray-600 hover:text-blue-500 transition font-medium">Misión</a>
+                    <a href="#valores" class="text-gray-600 hover:text-blue-500 transition font-medium">Valores</a> <!-- Enlace a Valores -->
+                    <a href="#ubicacion" class="text-gray-600 hover:text-blue-500 transition font-medium">Contacto</a>
+                    <div class="flex items-center gap-3 ml-4">
+                        <a href="https://wa.me/526561010854?text=Hola,%20me%20interesa%20información%20sobre%20sus%20productos" target="_blank" class="text-green-500 hover:text-green-600 text-3xl transition transform hover:scale-110" title="Enviar WhatsApp">
+                            <i class="fa-brands fa-whatsapp"></i>
+                        </a>
+                        <a href="tel:+526561010854" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-full font-semibold transition transform hover:scale-105 shadow-lg flex items-center gap-2">
+                            <i class="fa-solid fa-phone"></i> Llamar
+                        </a>
+                    </div>
+                </div>
+                <!-- Menú Móvil Botón -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-gray-600 hover:text-blue-500 focus:outline-none">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Menú Móvil Desplegable -->
+        <div class="md:hidden hidden bg-white border-t" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#inicio" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-500 hover:bg-gray-50">Inicio</a>
+                <a href="#productos" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-500 hover:bg-gray-50">Productos</a>
+                <a href="#vision" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-500 hover:bg-gray-50">Visión</a>
+                <a href="#mision" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-500 hover:bg-gray-50">Misión</a>
+                <a href="#valores" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-500 hover:bg-gray-50">Valores</a> <!-- Enlace a Valores Móvil -->
+                <a href="#ubicacion" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-500 hover:bg-gray-50">Contacto</a>
+                <div class="flex gap-2 mt-4 px-3">
+                    <a href="https://wa.me/526561010854?text=Hola,%20me%20interesa%20información%20sobre%20sus%20productos" class="flex-1 text-center bg-green-500 hover:bg-green-600 text-white px-3 py-3 rounded-md font-bold transition">
+                        <i class="fa-brands fa-whatsapp mr-2"></i> WhatsApp
+                    </a>
+                    <a href="tel:+526561010854" class="flex-1 text-center bg-blue-600 hover:bg-blue-700 text-white px-3 py-3 rounded-md font-bold transition">
+                        <i class="fa-solid fa-phone mr-2"></i> Llamar
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- Hero Section -->
+    <section id="inicio" class="hero-bg pt-32 pb-40 px-4 sm:px-6 lg:px-8 relative text-white text-center md:text-left">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 fade-in-section">
+                <h1 class="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">
+                    Limpieza Avanzada para el <br> <span class="text-blue-200">Mundo Moderno</span>
+                </h1>
+                <p class="text-lg md:text-xl text-blue-100 mb-8 max-w-lg mx-auto md:mx-0">
+                    Descubre la calidad superior de NextGen. Todo lo que necesitas en un solo lugar.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                    <a href="#productos" class="bg-white text-blue-600 px-8 py-3 rounded-full font-bold shadow-lg hover:bg-gray-100 transition transform hover:-translate-y-1">
+                        Ver Catálogo
+                    </a>
+                    <a href="https://wa.me/526561010854?text=Hola,%20quiero%20hacer%20un%20pedido" target="_blank" class="bg-green-500 text-white px-8 py-3 rounded-full font-bold shadow-lg hover:bg-green-600 transition transform hover:-translate-y-1 flex items-center justify-center gap-2">
+                        <i class="fa-brands fa-whatsapp"></i> Cotizar
+                    </a>
+                </div>
+            </div>
+            <div class="md:w-1/2 mt-12 md:mt-0 relative fade-in-section" style="transition-delay: 200ms;">
+                <div class="relative w-full max-w-md mx-auto aspect-square bg-white/10 rounded-full flex items-center justify-center backdrop-blur-sm border border-white/20 animate-[bounce_3s_infinite]">
+                    <i class="fa-solid fa-broom text-9xl text-white opacity-90 drop-shadow-2xl"></i>
+                    <div class="absolute top-0 right-0 w-16 h-16 bg-blue-300 rounded-full opacity-50 blur-xl animate-pulse"></div>
+                    <div class="absolute bottom-10 left-10 w-24 h-24 bg-white rounded-full opacity-30 blur-xl"></div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-shape">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,A0,0,0,321.39,56.44Z" class="shape-fill"></path>
+            </svg>
+        </div>
+    </section>
+    <!-- Catálogo de Productos (Scroll Horizontal) -->
+    <section id="productos" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in-section">
+                <h2 class="text-blue-600 font-semibold tracking-wide uppercase text-sm">Nuestro Catálogo</h2>
+                <h3 class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+                    Categorías de Productos
+                </h3>
+                <p class="mt-4 text-sm text-gray-500">Desliza horizontalmente para ver más <i class="fa-solid fa-arrow-right ml-1"></i></p>
+            </div>
+            <!-- SECCIÓN 1: TRAPEADORES (PRECIOS: $220) -->
+            <div class="mb-16 fade-in-section">
+                <div class="flex items-center mb-1 px-2">
+                    <div class="bg-blue-100 p-2 rounded-lg mr-3"><i class="fa-solid fa-mop text-blue-600 text-xl"></i></div>
+                    <h3 class="text-2xl font-bold text-gray-800">Trapeadores</h3>
+                </div>
+                <!-- DESCRIPCIÓN AÑADIDA -->
+                <p class="text-base text-gray-600 mb-4 px-2">
+                    Nuestra selección premium combina alta absorción, durabilidad superior y la comodidad de un 
+                    <span class="font-semibold text-blue-700">mango ergonómico</span> para proteger tu espalda.
+                </p>
+                <div class="flex overflow-x-auto pb-8 hide-scroll-bar snap-x snap-mandatory gap-6 px-2">
+                    <!-- Item 1: Trapeador verde mix -->
+                    <div class="flex-shrink-0 w-64 md:w-72 bg-white rounded-xl shadow-md product-card snap-center overflow-hidden border border-gray-100">
+                        <!-- Badge de Precio -->
+                        <div class="absolute top-2 right-2 bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full shadow-md z-10">
+                            $220
+                        </div>
+                        <img src="https://i.imgur.com/4ZvH5MZ.jpeg" alt="Trapeador verde mix" class="product-image" onerror="this.onerror=null; this.src='https://placehold.co/600x400/CCCCCC/333333?text=Sin+Imagen';" loading="lazy">
+                        <div class="p-4">
+                            <h4 class="font-bold text-lg mb-1">Trapeador verde mix</h4>
+                            <p class="text-sm text-gray-500">Limpieza eficiente con alta absorción. Ideal para uso diario en el hogar o negocio.</p>
+                        </div>
+                    </div>
+                    <!-- Item 2: Trapeador rojo mix -->
+                    <div class="flex-shrink-0 w-64 md:w-72 bg-white rounded-xl shadow-md product-card snap-center overflow-hidden border border-gray-100">
+                        <!-- Badge de Precio -->
+                        <div class="absolute top-2 right-2 bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full shadow-md z-10">
+                            $220
+                        </div>
+                        <img src="https://i.imgur.com/8TQiPVb.jpeg" alt="Trapeador rojo mix" class="product-image" onerror="this.onerror=null; this.src='https://placehold.co/600x400/CCCCCC/333333?text=Sin+Imagen';" loading="lazy">
+                        <div class="p-4">
+                            <h4 class="font-bold text-lg mb-1">Trapeador rojo mix</h4>
+                            <p class="text-sm text-gray-500">Fibras resistentes que garantizan un arrastre de suciedad superior. Máxima durabilidad.</p>
+                        </div>
+                    </div>
+                    <!-- Item 3: Trapeador lila mix -->
+                    <div class="flex-shrink-0 w-64 md:w-72 bg-white rounded-xl shadow-md product-card snap-center overflow-hidden border border-gray-100">
+                        <!-- Badge de Precio -->
+                        <div class="absolute top-2 right-2 bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full shadow-md z-10">
+                            $220
+                        </div>
+                        <img src="https://i.imgur.com/Hurz7Cd.jpeg" alt="Trapeador lila mix" class="product-image" onerror="this.onerror=null; this.src='https://placehold.co/600x400/CCCCCC/333333?text=Sin+Imagen';" loading="lazy">
+                        <div class="p-4">
+                            <h4 class="font-bold text-lg mb-1">Trapeador lila mix</h4>
+                            <p class="text-sm text-gray-500">Versatilidad y manejo ligero. Ideal para llegar a rincones y espacios reducidos.</p>
+                        </div>
+                    </div>
+                    <!-- Item 4: Trapeador azul mix -->
+                    <div class="flex-shrink-0 w-64 md:w-72 bg-white rounded-xl shadow-md product-card snap-center overflow-hidden border border-gray-100">
+                        <!-- Badge de Precio -->
+                        <div class="absolute top-2 right-2 bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full shadow-md z-10">
+                            $220
+                        </div>
+                        <img src="https://i.imgur.com/e4hqWjR.jpeg" alt="Trapeador azul mix" class="product-image" onerror="this.onerror=null; this.src='https://placehold.co/600x400/CCCCCC/333333?text=Sin+Imagen';" loading="lazy">
+                        <div class="p-4">
+                            <h4 class="font-bold text-lg mb-1">Trapeador azul mix</h4>
+                            <p class="text-sm text-gray-500">Combinación de fibras para un secado rápido y acabados sin marcas.</p>
+                        </div>
+                    </div>
+                    <!-- Item 5: Trapeador negro -->
+                    <div class="flex-shrink-0 w-64 md:w-72 bg-white rounded-xl shadow-md product-card snap-center overflow-hidden border border-gray-100">
+                        <!-- Badge de Precio -->
+                        <div class="absolute top-2 right-2 bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full shadow-md z-10">
+                            $220
+                        </div>
+                        <img src="https://i.imgur.com/eVJs5Dx.jpeg" alt="Trapeador negro" class="product-image" onerror="this.onerror=null; this.src='https://placehold.co/600x400/CCCCCC/333333?text=Sin+Imagen';" loading="lazy">
+                        <div class="p-4">
+                            <h4 class="font-bold text-lg mb-1">Trapeador negro</h4>
+                            <p class="text-sm text-gray-500">Materiales de uso rudo para ambientes exigentes. Perfecto para pisos industriales.</p>
+                        </div>
+                    </div>
+                    <!-- Item 6: Trapeador azul marino -->
+                    <div class="flex-shrink-0 w-64 md:w-72 bg-white rounded-xl shadow-md product-card snap-center overflow-hidden border border-gray-100">
+                        <!-- Badge de Precio -->
+                        <div class="absolute top-2 right-2 bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full shadow-md z-10">
+                            $220
+                        </div>
+                        <!-- URL ACTUALIZADA -->
+                        <img src="https://i.imgur.com/qBIMYS4.jpeg" alt="Trapeador azul marino" class="product-image" onerror="this.onerror=null; this.src='https://placehold.co/600x400/CCCCCC/333333?text=Sin+Imagen';" loading="lazy">
+                        <div class="p-4">
+                            <h4 class="font-bold text-lg mb-1">Trapeador azul marino</h4>
+                            <p class="text-sm text-gray-500">Diseño ergonómico y gran volumen de absorción. Uso profesional.</p>
+                        </div>
+                    </div>
+                    <!-- Item 7: Trapeador rosa -->
+                    <div class="flex-shrink-0 w-64 md:w-72 bg-white rounded-xl shadow-md product-card snap-center overflow-hidden border border-gray-100">
+                        <!-- Badge de Precio -->
+                        <div class="absolute top-2 right-2 bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full shadow-md z-10">
+                            $220
+                        </div>
+                        <!-- URL ACTUALIZADA -->
+                        <img src="https://i.imgur.com/EyGwERn.jpeg" alt="Trapeador rosa" class="product-image" onerror="this.onerror=null; this.src='https://placehold.co/600x400/CCCCCC/333333?text=Sin+Imagen';" loading="lazy">
+                        <div class="p-4">
+                            <h4 class="font-bold text-lg mb-1">Trapeador rosa</h4>
+                            <p class="text-sm text-gray-500">Suavidad para pisos delicados (madera, laminado) con excelente capacidad de recolección.</p>
+                        </div>
+                    </div>
+                    <!-- Item 8: Trapeador aqua -->
+                    <div class="flex-shrink-0 w-64 md:w-72 bg-white rounded-xl shadow-md product-card snap-center overflow-hidden border border-gray-100">
+                        <!-- Badge de Precio -->
+                        <div class="absolute top-2 right-2 bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full shadow-md z-10">
+                            $220
+                        </div>
+                        <img src="https://i.imgur.com/jFBV1ET.jpeg" alt="Trapeador aqua" class="product-image" onerror="this.onerror=null; this.src='https://placehold.co/600x400/CCCCCC/333333?text=Sin+Imagen';" loading="lazy">
+                        <div class="p-4">
+                            <h4 class="font-bold text-lg mb-1">Trapeador aqua</h4>
+                            <p class="text-sm text-gray-500">Cabezal de alta densidad que maximiza el rendimiento del detergente.</p>
+                        </div>
+                    </div>
+                    <!-- Item 9: Trapeador gris -->
+                    <div class="flex-shrink-0 w-64 md:w-72 bg-white rounded-xl shadow-md product-card snap-center overflow-hidden border border-gray-100">
+                        <!-- Badge de Precio -->
+                        <div class="absolute top-2 right-2 bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full shadow-md z-10">
+                            $220
+                        </div>
+                        <!-- URL ACTUALIZADA -->
+                        <img src="https://i.imgur.com/kp18K6D.jpeg" alt="Trapeador gris" class="product-image" onerror="this.onerror=null; this.src='https://placehold.co/600x400/CCCCCC/333333?text=Sin+Imagen';" loading="lazy">
+                        <div class="p-4">
+                            <h4 class="font-bold text-lg mb-1">Trapeador gris</h4>
+                            <p class="text-sm text-gray-500">El balance perfecto entre durabilidad y suavidad para todo tipo de pisos.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- SECCIÓN 2: ESCOBAS (PRECIOS ACTUALIZADOS A $180) -->
+            <div class="mb-16 fade-in-section">
+                <div class="flex items-center mb-1 px-2">
+                    <div class="bg-red-100 p-2 rounded-lg mr-3"><i class="fa-solid fa-broom text-red-600 text-xl"></i></div>
+                    <h3 class="text-2xl font-bold text-gray-800">Escobas</h3>
+                </div>
+                <!-- DESCRIPCIÓN AÑADIDA -->
+                <p class="text-base text-gray-600 mb-4 px-2">
+                    Nuestra línea de escobas está diseñada para barridos sin esfuerzo, con cerdas que no se doblan ni dejan rastro.
+                </p>
+                <div class="flex overflow-x-auto pb-8 hide-scroll-bar snap-x snap-mandatory gap-6 px-2">
+                    <!-- Item 1: Escoba con mango Ergonómico Azul -->
+                    <div class="flex-shrink-0 w-64 md:w-72 bg-white rounded-xl shadow-md product-card snap-center overflow-hidden border border-gray-100">
+                        <!-- Badge de Precio -->
+                        <div class="absolute top-2 right-2 bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full shadow-md z-10">
+                            $180
+                        </div>
+                        <img src="https://i.imgur.com/WxrVgdQ.jpeg" alt="Escoba de cerda gruesa azul" class="product-image" onerror="this.onerror=null; this.src='https://placehold.co/600x400/CCCCCC/333333?text=Sin+Imagen';" loading="lazy">
+                        <div class="p-4">
+                            <h4 class="font-bold text-lg mb-1">Escoba Cerda Gruesa (Azul)</h4>
+                            <p class="text-sm text-gray-500">Ideal para exteriores y residuos pesados. Cerdas gruesas resistentes.</p>
+                        </div>
+                    </div>
+                    <!-- Item 2: Escoba con mango Ergonómico Negra -->
+                    <div class="flex-shrink-0 w-64 md:w-72 bg-white rounded-xl shadow-md product-card snap-center overflow-hidden border border-gray-100">
+                        <!-- Badge de Precio -->
+                        <div class="absolute top-2 right-2 bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full shadow-md z-10">
+                            $180
+                        </div>
+                        <img src="https://i.imgur.com/I2mLwsZ.jpeg" alt="Escoba de cerda fina morada" class="product-image" onerror="this.onerror=null; this.src='https://placehold.co/600x400/CCCCCC/333333?text=Sin+Imagen';" loading="lazy">
+                        <div class="p-4">
+                            <h4 class="font-bold text-lg mb-1">Escoba Cerda Fina (Morada)</h4>
+                            <p class="text-sm text-gray-500">Recoge hasta el polvo más fino. Perfecta para pisos pulidos de interiores.</p>
+                        </div>
+                    </div>
+                    <!-- Item 3: Escoba con mango Ergonómico Verde -->
+                    <div class="flex-shrink-0 w-64 md:w-72 bg-white rounded-xl shadow-md product-card snap-center overflow-hidden border border-gray-100">
+                        <!-- Badge de Precio -->
+                        <div class="absolute top-2 right-2 bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full shadow-md z-10">
+                            $180
+                        </div>
+                        <img src="https://i.imgur.com/8p3ZXjp.jpeg" alt="Escoba de cerda fina amarilla" class="product-image" onerror="this.onerror=null; this.src='https://placehold.co/600x400/CCCCCC/333333?text=Sin+Imagen';" loading="lazy">
+                        <div class="p-4">
+                            <h4 class="font-bold text-lg mb-1">Escoba Cerda Fina (Amarilla)</h4>
+                            <p class="text-sm text-gray-500">Cerdas suaves y duraderas. Ideal para pisos de madera y laminados.</p>
+                        </div>
+                    </div>
+                    <!-- Item 4: Escoba con mango Ergonómico Rosa -->
+                    <div class="flex-shrink-0 w-64 md:w-72 bg-white rounded-xl shadow-md product-card snap-center overflow-hidden border border-gray-100">
+                        <!-- Badge de Precio -->
+                        <div class="absolute top-2 right-2 bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full shadow-md z-10">
+                            $180
+                        </div>
+                        <img src="https://i.imgur.com/74Tvhke.jpeg" alt="Escoba de cerda plástica roja" class="product-image" onerror="this.onerror=null; this.src='https://placehold.co/600x400/CCCCCC/333333?text=Sin+Imagen';" loading="lazy">
+                        <div class="p-4">
+                            <h4 class="font-bold text-lg mb-1">Escoba Plástica (Roja)</h4>
+                            <p class="text-sm text-gray-500">Diseño ligero y práctico. Excelente para patios y áreas húmedas.</p>
+                        </div>
+                    </div>
+                    <!-- Item 5: Escoba con mango Ergonómico Café -->
+                    <div class="flex-shrink-0 w-64 md:w-72 bg-white rounded-xl shadow-md product-card snap-center overflow-hidden border border-gray-100">
+                        <!-- Badge de Precio -->
+                        <div class="absolute top-2 right-2 bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full shadow-md z-10">
+                            $180
+                        </div>
+                        <img src="https://i.imgur.com/UrdUnW2.jpeg" alt="Escoba de cerda plástica verde" class="product-image" onerror="this.onerror=null; this.src='https://placehold.co/600x400/CCCCCC/333333?text=Sin+Imagen';" loading="lazy">
+                        <div class="p-4">
+                            <h4 class="font-bold text-lg mb-1">Escoba Plástica (Verde)</h4>
+                            <p class="text-sm text-gray-500">Larga vida útil. No retiene olores ni humedad, ideal para cocinas.</p>
+                        </div>
+                    </div>
+                    <!-- Item 6: NUEVA Escoba Verona Angular -->
+                    <div class="flex-shrink-0 w-64 md:w-72 bg-white rounded-xl shadow-md product-card snap-center overflow-hidden border border-gray-100">
+                        <!-- Badge de Precio -->
+                        <div class="absolute top-2 right-2 bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full shadow-md z-10">
+                            $180
+                        </div>
+                        <img src="https://i.imgur.com/We9hSEk.jpeg" alt="Escoba Verona Angular" class="product-image" onerror="this.onerror=null; this.src='https://placehold.co/600x400/CCCCCC/333333?text=Sin+Imagen';" loading="lazy">
+                        <div class="p-4">
+                            <h4 class="font-bold text-lg mb-1">Escoba Verona Angular</h4>
+                            <p class="text-sm text-gray-500">Diseño angular que permite limpiar eficazmente esquinas y bordes. Ideal para trabajos de precisión.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- SECCIÓN 3: RECOGEDORES (PRECIOS ACTUALIZADOS A $180) -->
+            <div class="mb-16 fade-in-section">
+                <div class="flex items-center mb-1 px-2">
+                    <div class="bg-gray-200 p-2 rounded-lg mr-3"><i class="fa-solid fa-trash-can text-gray-600 text-xl"></i></div>
+                    <h3 class="text-2xl font-bold text-gray-800">Recogedores</h3>
+                </div>
+                <!-- DESCRIPCIÓN AGREGADA -->
+                <p class="text-base text-gray-600 mb-4 px-2">
+                    Di adiós al polvo y los residuos. Nuestros recogedores están diseñados para sellar 
+                    perfectamente contra el suelo, asegurando que cada barrido sea limpio y completo.
+                </p>
+                <div class="flex overflow-x-auto pb-8 hide-scroll-bar snap-x snap-mandatory gap-6 px-2">
+                    <!-- Item 1: Recogedor azul -->
+                    <div class="flex-shrink-0 w-64 md:w-72 bg-white rounded-xl shadow-md product-card snap-center overflow-hidden border border-gray-100">
+                        <!-- Badge de Precio -->
+                        <div class="absolute top-2 right-2 bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full shadow-md z-10">
+                            $180
+                        </div>
+                        <img src="https://i.imgur.com/V1I6n9R.jpeg" alt="Recogedor azul con bastón" class="product-image" onerror="this.onerror=null; this.src='https://placehold.co/600x400/CCCCCC/333333?text=Sin+Imagen';" loading="lazy">
+                        <div class="p-4">
+                            <h4 class="font-bold text-lg mb-1">Recogedor Industrial (Azul)</h4>
+                            <p class="text-sm text-gray-500">Mango largo y diseño robusto. Ideal para entornos comerciales y uso rudo.</p>
+                        </div>
+                    </div>
+                    <!-- Item 2: Recogedor gris (Mano) -->
+                    <div class="flex-shrink-0 w-64 md:w-72 bg-white rounded-xl shadow-md product-card snap-center overflow-hidden border border-gray-100">
+                        <!-- Badge de Precio -->
+                        <div class="absolute top-2 right-2 bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full shadow-md z-10">
+                            $180
+                        </div>
+                        <img src="https://i.imgur.com/EZJa3dV.jpeg" alt="Recogedor de mano gris" class="product-image" onerror="this.onerror=null; this.src='https://placehold.co/600x400/CCCCCC/333333?text=Sin+Imagen';" loading="lazy">
+                        <div class="p-4">
+                            <h4 class="font-bold text-lg mb-1">Recogedor de Mano Premium</h4>
+                            <p class="text-sm text-gray-500">Bordes de goma para un agarre perfecto y fácil de limpiar. Básico y económico.</p>
+                        </div>
+                    </div>
+                    <!-- Item 3: NUEVO Recogedor Hotelero -->
+                    <div class="flex-shrink-0 w-64 md:w-72 bg-white rounded-xl shadow-md product-card snap-center overflow-hidden border border-gray-100">
+                        <!-- Badge de Precio -->
+                        <div class="absolute top-2 right-2 bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full shadow-md z-10">
+                            $180
+                        </div>
+                        <img src="https://i.imgur.com/kJN2K79.jpeg" alt="Recogedor Hotelero" class="product-image" onerror="this.onerror=null; this.src='https://placehold.co/600x400/CCCCCC/333333?text=Sin+Imagen';" loading="lazy">
+                        <div class="p-4">
+                            <h4 class="font-bold text-lg mb-1">Recogedor Hotelero</h4>
+                            <p class="text-sm text-gray-500">Diseño elegante y discreto con tapa que evita la dispersión de residuos. Perfecto para áreas de alto tráfico.</p>
+                        </div>
+                    </div>
+                    <!-- Item 4: Recogedor naranja (c/ Bastón) -->
+                    <div class="flex-shrink-0 w-64 md:w-72 bg-white rounded-xl shadow-md product-card snap-center overflow-hidden border border-gray-100">
+                        <!-- Badge de Precio -->
+                        <div class="absolute top-2 right-2 bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full shadow-md z-10">
+                            $180
+                        </div>
+                        <img src="https://i.imgur.com/QcBlRKq.jpeg" alt="Recogedor naranja con bastón" class="product-image" onerror="this.onerror=null; this.src='https://placehold.co/600x400/CCCCCC/333333?text=Sin+Imagen';" loading="lazy">
+                        <div class="p-4">
+                            <h4 class="font-bold text-lg mb-1">Recogedor Ergonómico (Naranja)</h4>
+                            <p class="text-sm text-gray-500">Para una limpieza cómoda sin necesidad de agacharse, con tapa abatible.</p>
+                        </div>
+                    </div>
+                    <!-- Item 5: Recogedor rosa (c/ Bastón) -->
+                    <div class="flex-shrink-0 w-64 md:w-72 bg-white rounded-xl shadow-md product-card snap-center overflow-hidden border border-gray-100">
+                        <!-- Badge de Precio -->
+                        <div class="absolute top-2 right-2 bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full shadow-md z-10">
+                            $180
+                        </div>
+                        <img src="https://i.imgur.com/aa6hvRk.jpeg" alt="Recogedor rosa con bastón" class="product-image" onerror="this.onerror=null; this.src='https://placehold.co/600x400/CCCCCC/333333?text=Sin+Imagen';" loading="lazy">
+                        <div class="p-4">
+                            <h4 class="font-bold text-lg mb-1">Recogedor Ergonómico (Rosa)</h4>
+                            <p class="text-sm text-gray-500">Cuerpo ligero y resistente. Ideal para salones de belleza o espacios delicados.</p>
+                        </div>
+                    </div>
+                    <!-- Item 6: Recogedor verde (c/ Bastón) -->
+                    <div class="flex-shrink-0 w-64 md:w-72 bg-white rounded-xl shadow-md product-card snap-center overflow-hidden border border-gray-100">
+                        <!-- Badge de Precio -->
+                        <div class="absolute top-2 right-2 bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full shadow-md z-10">
+                            $180
+                        </div>
+                        <img src="https://i.imgur.com/TxGl6rt.jpeg" alt="Recogedor verde con bastón" class="product-image" onerror="this.onerror=null; this.src='https://placehold.co/600x400/CCCCCC/333333?text=Sin+Imagen';" loading="lazy">
+                        <div class="p-4">
+                            <h4 class="font-bold text-lg mb-1">Recogedor Ergonómico (Verde)</h4>
+                            <p class="text-sm text-gray-500">Recolección de basura fácil y rápida. Mantiene las manos limpias en todo momento.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- SECCIÓN 4: MINISPLITS (PRECIOS ACTUALIZADOS A $5,500 y $6,600) -->
+            <div class="mb-16 fade-in-section">
+                <div class="flex items-center mb-1 px-2">
+                    <div class="bg-cyan-100 p-2 rounded-lg mr-3"><i class="fa-regular fa-snowflake text-cyan-600 text-xl"></i></div>
+                    <h3 class="text-2xl font-bold text-gray-800">Minisplits y Accesorios</h3>
+                </div>
+                <!-- DESCRIPCIÓN ACTUALIZADA -->
+                <p class="text-base text-gray-600 mb-4 px-2">
+                    Selecciona el minisplit perfecto para climatizar tu espacio. Ofrecemos equipos de alto rendimiento que garantizan el máximo confort, eficiencia y un aire más puro. Contamos con equipos estándar y tecnología Inverter.
+                </p>
+                <div class="flex overflow-x-auto pb-8 hide-scroll-bar snap-x snap-mandatory gap-6 px-2">
+                    <!-- Item 1: Minisplit Frikko AVANT (Estándar) - PRECIO: $5,500 -->
+                    <div class="flex-shrink-0 w-64 md:w-72 bg-white rounded-xl shadow-md product-card snap-center overflow-hidden border border-gray-100">
+                        <!-- Badge de Precio -->
+                        <div class="absolute top-2 right-2 bg-red-500 text-white text-sm font-bold px-3 py-1 rounded-full shadow-md z-10">
+                            $5,500
+                        </div>
+                        <img src="https://i.imgur.com/NvuTxFn.jpeg" alt="Minisplit Frikko AVANT Frío/Calor" class="product-image" onerror="this.onerror=null; this.src='https://placehold.co/600x400/CCCCCC/333333?text=Sin+Imagen';" loading="lazy">
+                        <div class="p-4">
+                            <h4 class="font-bold text-lg mb-1">Minisplit Frikko AVANT (12 SEER)</h4>
+                            <p class="text-sm text-gray-500">
+                                Máximo confort Frío/Calor con **Eficiencia 12 SEER**. Disponible en 110V y 220V. 
+                                <span class="font-semibold text-cyan-700">Garantía Extendida:</span> 1 año en condensadora y 3 años en evaporadora. 
+                                Somos **Distribuidores Autorizados** con el **mejor precio de la ciudad**. 
+                                ¡Incluye **entrega a domicilio sin costo**! Te asesoramos con técnicos certificados para la instalación.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Item 2: Minisplit Frikko INVERTER FIT 18+ - PRECIO: $6,600 -->
+                    <div class="flex-shrink-0 w-64 md:w-72 bg-white rounded-xl shadow-md product-card snap-center overflow-hidden border border-gray-100">
+                         <!-- Badge de Precio -->
+                        <div class="absolute top-2 right-2 bg-red-500 text-white text-sm font-bold px-3 py-1 rounded-full shadow-md z-10">
+                            $6,600
+                        </div>
+                        <img src="https://i.imgur.com/03MMnjO.jpeg" alt="Minisplit Frikko INVERTER FIT 18+" class="product-image" onerror="this.onerror=null; this.src='https://placehold.co/600x400/CCCCCC/333333?text=Sin+Imagen';" loading="lazy">
+                        <div class="p-4">
+                            <h4 class="font-bold text-lg mb-1">Minisplit Frikko INVERTER FIT 18+</h4>
+                            <p class="text-sm text-gray-500">
+                                **Ahorro de energía líder** en su clase. Tecnología Inverter Frío/Calor. 
+                                <span class="font-semibold text-cyan-700">Garantía:</span> 1 año en partes, **10 años** en compresor. 
+                                ¡La mejor opción para reducir tu consumo eléctrico!
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- SECCIÓN 5: CUBETAS (PRECIO ACTUALIZADO A $180) -->
+            <div class="mb-16 fade-in-section">
+                <div class="flex items-center mb-1 px-2">
+                    <div class="bg-yellow-100 p-2 rounded-lg mr-3"><i class="fa-solid fa-bucket text-yellow-600 text-xl"></i></div>
+                    <h3 class="text-2xl font-bold text-gray-800">Cubetas</h3>
+                </div>
+                <!-- DESCRIPCIÓN AGREGADA -->
+                <p class="text-base text-gray-600 mb-4 px-2">
+                    Una solución eficiente y de **uso rudo** para entornos profesionales. Equipada con ruedas silenciosas y un exprimidor de alta palanca, te permite trapear sin esfuerzo ni contacto directo.
+                </p>
+                <div class="flex overflow-x-auto pb-8 hide-scroll-bar snap-x snap-mandatory gap-6 px-2">
+                    <!-- Único Producto: Cubeta Exprimidora -->
+                    <div class="flex-shrink-0 w-64 md:w-72 bg-white rounded-xl shadow-md product-card snap-center overflow-hidden border border-gray-100">
+                        <!-- Badge de Precio - ACTUALIZADO A $180 -->
+                        <div class="absolute top-2 right-2 bg-red-500 text-white text-sm font-bold px-3 py-1 rounded-full shadow-md z-10">
+                            $180
+                        </div>
+                        <img src="https://i.imgur.com/4QFnet9.jpeg" alt="Cubeta exprimidora profesional" class="product-image" onerror="this.onerror=null; this.src='https://placehold.co/600x400/CCCCCC/333333?text=Sin+Imagen';" loading="lazy">
+                        <div class="p-4">
+                            <h4 class="font-bold text-lg mb-1">Cubeta Exprimidora Profesional 36L</h4>
+                            <p class="text-sm text-gray-500">Diseño de alto rendimiento con ruedas silenciosas y prensa de palanca reforzada. La herramienta definitiva para pisos impecables.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- SECCIÓN 6: TRAPOS (PRECIOS ACTUALIZADOS A $50) -->
+            <div class="mb-16 fade-in-section">
+                <div class="flex items-center mb-4 px-2">
+                    <div class="bg-purple-100 p-2 rounded-lg mr-3"><i class="fa-solid fa-rug text-purple-600 text-xl"></i></div>
+                    <h3 class="text-2xl font-bold text-gray-800">Trapos</h3>
+                </div>
+                <!-- DESCRIPCIÓN AGREGADA -->
+                <p class="text-base text-gray-600 mb-4 px-2">
+                    La herramienta esencial para un acabado perfecto. Nuestra microfibra de alta densidad atrapa el polvo y absorbe líquidos sin dejar rastros ni pelusa.
+                </p>
+                <div class="flex overflow-x-auto pb-8 hide-scroll-bar snap-x snap-mandatory gap-6 px-2">
+                    <!-- Único Producto: Paño Microfibra -->
+                    <div class="flex-shrink-0 w-64 md:w-72 bg-white rounded-xl shadow-md product-card snap-center overflow-hidden border border-gray-100">
+                        <!-- Badge de Precio - ACTUALIZADO A $50 -->
+                        <div class="absolute top-2 right-2 bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full shadow-md z-10">
+                            $50
+                        </div>
+                        <img src="https://i.imgur.com/tgdfZuW.jpeg" alt="Paño de microfibra 40x40" class="product-image" onerror="this.onerror=null; this.src='https://placehold.co/600x400/CCCCCC/333333?text=Sin+Imagen';" loading="lazy">
+                        <div class="p-4">
+                            <h4 class="font-bold text-lg mb-1">Paño de Microfibra 40x40</h4>
+                            <p class="text-sm text-gray-500">Súper absorbente y versátil. Ideal para lavado de autos, cocina, taller y limpieza general del hogar.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- SECCIÓN 7: COMBOS (ACTUALIZADA CON IMÁGENES) -->
+            <div class="mb-16 fade-in-section">
+                <div class="flex items-center mb-1 px-2">
+                    <div class="bg-green-100 p-2 rounded-lg mr-3"><i class="fa-solid fa-box-open text-green-600 text-xl"></i></div>
+                    <h3 class="text-2xl font-bold text-gray-800">Combos</h3>
+                </div>
+                <p class="text-base text-gray-600 mb-4 px-2">
+                    Aprovecha nuestros paquetes especiales diseñados para equiparte con todo lo necesario al mejor precio. ¡Obtén el máximo valor por tu compra!
+                </p>
+                <div class="flex overflow-x-auto pb-8 hide-scroll-bar snap-x snap-mandatory gap-6 px-2">
+                    <!-- Combo 1: Trapeador y Cubeta -->
+                    <div class="flex-shrink-0 w-64 md:w-72 bg-white rounded-xl shadow-md product-card snap-center overflow-hidden border border-gray-100">
+                        <div class="absolute top-2 right-2 bg-green-600 text-white text-sm font-bold px-3 py-1 rounded-full shadow-md z-10">
+                            $500
+                        </div>
+                        <img src="https://i.imgur.com/V86dNoK.jpeg" alt="Combo 1: Trapeador y Cubeta" class="product-image" onerror="this.onerror=null; this.src='https://placehold.co/600x400/CCCCCC/333333?text=Combo+1';" loading="lazy">
+                        <div class="p-4">
+                            <h4 class="font-bold text-lg mb-1 text-green-700">Combo Piso Limpio</h4>
+                            <p class="text-sm text-gray-500">Incluye: 1 Trapeador (a elegir) y 1 Cubeta Exprimidora Profesional.</p>
+                        </div>
+                    </div>
+                    <!-- Combo 2: Escoba y Recogedor -->
+                    <div class="flex-shrink-0 w-64 md:w-72 bg-white rounded-xl shadow-md product-card snap-center overflow-hidden border border-gray-100">
+                        <div class="absolute top-2 right-2 bg-green-600 text-white text-sm font-bold px-3 py-1 rounded-full shadow-md z-10">
+                            $360
+                        </div>
+                        <img src="https://i.imgur.com/O9NoorM.jpeg" alt="Combo 2: Escoba y Recogedor" class="product-image" onerror="this.onerror=null; this.src='https://placehold.co/600x400/CCCCCC/333333?text=Combo+2';" loading="lazy">
+                        <div class="p-4">
+                            <h4 class="font-bold text-lg mb-1 text-green-700">Combo Barrido Básico</h4>
+                            <p class="text-sm text-gray-500">Incluye: 1 Escoba (a elegir) y 1 Recogedor Ergonómico (a elegir).</p>
+                        </div>
+                    </div>
+                    <!-- Combo 3: Trapeador, Cubeta y Escoba -->
+                    <div class="flex-shrink-0 w-64 md:w-72 bg-white rounded-xl shadow-md product-card snap-center overflow-hidden border border-gray-100">
+                        <div class="absolute top-2 right-2 bg-green-600 text-white text-sm font-bold px-3 py-1 rounded-full shadow-md z-10">
+                            $550
+                        </div>
+                        <img src="https://i.imgur.com/eVBVTge.jpeg" alt="Combo 3: Trapeador, Cubeta y Escoba" class="product-image" onerror="this.onerror=null; this.src='https://placehold.co/600x400/CCCCCC/333333?text=Combo+3';" loading="lazy">
+                        <div class="p-4">
+                            <h4 class="font-bold text-lg mb-1 text-green-700">Combo Hogar Completo (sin recogedor)</h4>
+                            <p class="text-sm text-gray-500">Incluye: 1 Trapeador, 1 Cubeta Exprimidora y 1 Escoba (a elegir).</p>
+                        </div>
+                    </div>
+                    <!-- Combo 4: Kit de Limpieza Total -->
+                    <div class="flex-shrink-0 w-64 md:w-72 bg-white rounded-xl shadow-md product-card snap-center overflow-hidden border border-gray-100">
+                        <div class="absolute top-2 right-2 bg-red-600 text-white text-sm font-bold px-3 py-1 rounded-full shadow-md z-10">
+                            $700
+                        </div>
+                        <img src="https://i.imgur.com/kgplsLn.jpeg" alt="Combo 4: Kit Limpieza Total" class="product-image" onerror="this.onerror=null; this.src='https://placehold.co/600x400/CCCCCC/333333?text=Combo+4';" loading="lazy">
+                        <div class="p-4">
+                            <h4 class="font-bold text-lg mb-1 text-red-700">Combo Limpieza Total (¡El más vendido!)</h4>
+                            <p class="text-sm text-gray-500">Incluye: 1 Trapeador, 1 Cubeta Exprimidora, 1 Escoba y 1 Recogedor (todos a elegir).</p>
+                        </div>
+                    </div>
+                    <!-- Combo 5: Trapeador y Escoba -->
+                    <div class="flex-shrink-0 w-64 md:w-72 bg-white rounded-xl shadow-md product-card snap-center overflow-hidden border border-gray-100">
+                        <div class="absolute top-2 right-2 bg-green-600 text-white text-sm font-bold px-3 py-1 rounded-full shadow-md z-10">
+                            $500
+                        </div>
+                        <img src="https://i.imgur.com/ZlRMt5J.jpeg" alt="Combo 5: Trapeador y Escoba" class="product-image" onerror="this.onerror=null; this.src='https://placehold.co/600x400/CCCCCC/333333?text=Combo+5';" loading="lazy">
+                        <div class="p-4">
+                            <h4 class="font-bold text-lg mb-1 text-green-700">Combo Barrer y Trapear</h4>
+                            <p class="text-sm text-gray-500">Incluye: 1 Trapeador (a elegir) y 1 Escoba (a elegir). La combinación ideal.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Sección de Visión -->
+    <section id="vision" class="py-16 bg-blue-50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center fade-in-section">
+            <h2 class="text-blue-700 font-semibold tracking-wide uppercase text-sm mb-3">Nuestra Meta</h2>
+            <div class="bg-white p-8 rounded-xl shadow-xl border-t-4 border-blue-600">
+                <!-- Imagen de la Visión -->
+                <img src="https://i.imgur.com/gOORR2b.jpeg" 
+                     alt="Representación de un hogar limpio y moderno con productos de limpieza NextGen" 
+                     class="w-full h-auto rounded-xl -mt-6 mb-6 shadow-lg border-4 border-white transform hover:scale-[1.01] transition duration-300"
+                     onerror="this.onerror=null; this.src='https://placehold.co/800x200/5B83E9/ffffff?text=Visión+NextGen+Limpieza';"
+                     loading="lazy">
+                <h3 class="mt-0 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 mb-4 flex items-center justify-center gap-3">
+                    <i class="fa-solid fa-bullseye text-blue-600"></i> Visión
+                </h3>
+                <p class="mt-4 text-lg text-gray-600 italic">
+                    Ser reconocidos como el líder indiscutible en artículos de calidad y durabilidad. Buscamos que NEXTGEN sea sinónimo de eficiencia insuperable y el máximo cuidado para cada espacio, convirtiendo las tareas de limpieza en experiencias únicas con el uso de nuestros productos.
+                </p>
+            </div>
+        </div>
+    </section>
+    <!-- Sección de Misión -->
+    <section id="mision" class="py-16 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center fade-in-section" style="transition-delay: 200ms;">
+            <h2 class="text-blue-700 font-semibold tracking-wide uppercase text-sm mb-3">Nuestro Compromiso</h2>
+            <div class="bg-gray-50 p-8 rounded-xl shadow-xl border-t-4 border-blue-600">
+                <!-- Imagen de la Misión -->
+                <img src="https://i.imgur.com/cnVBLW2.jpeg" 
+                     alt="Primer plano de personas estrechando manos, representando compromiso y calidad" 
+                     class="w-full h-auto rounded-xl -mt-6 mb-6 shadow-lg border-4 border-gray-200 transform hover:scale-[1.01] transition duration-300"
+                     onerror="this.onerror=null; this.src='https://placehold.co/800x200/5B83E9/ffffff?text=Misión+NextGen+Limpieza';"
+                     loading="lazy">
+                <h3 class="mt-0 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 mb-4 flex items-center justify-center gap-3">
+                    <i class="fa-solid fa-handshake-angle text-blue-600"></i> Misión
+                </h3>
+                <p class="mt-4 text-lg text-gray-600 italic">
+                    Ofrecer a nuestros clientes los instrumentos de limpieza más avanzados y de la más alta calidad. Nuestro compromiso es superar las expectativas de nuestros clientes con productos que garantizan resultados impecables, duraderos y que aportan valor real al hogar, negocios y empresas.
+                </p>
+            </div>
+        </div>
+    </section>
+    <!-- SECCIÓN: VALORES ACTUALIZADA -->
+    <section id="valores" class="py-16 bg-blue-50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center fade-in-section" style="transition-delay: 300ms;">
+            <h2 class="text-blue-700 font-semibold tracking-wide uppercase text-sm mb-3">Principios Fundamentales</h2>
+            <div class="bg-white p-8 rounded-xl shadow-xl border-t-4 border-blue-600">
+                <h3 class="mt-0 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 mb-6 flex items-center justify-center gap-3">
+                    <i class="fa-solid fa-medal text-blue-600"></i> Valores NextGen
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+                    <!-- Valor 1: Calidad Innegociable -->
+                    <div class="bg-blue-50 p-4 rounded-lg shadow-sm border border-blue-200">
+                        <h4 class="font-bold text-lg text-blue-800 mb-1 flex items-center gap-2"><i class="fa-solid fa-star text-blue-500"></i> Calidad Innegociable</h4>
+                        <p class="text-sm text-gray-600">La excelencia es nuestro punto de partida. Solo utilizamos los mejores materiales y procesos, asegurando que cada producto NEXTGEN tenga una vida útil superior y un rendimiento que justifica ser la mejor elección para nuestros clientes.</p>
+                    </div>
+                    <!-- Valor 2: Confianza y Transparencia -->
+                    <div class="bg-blue-50 p-4 rounded-lg shadow-sm border border-blue-200">
+                        <h4 class="font-bold text-lg text-blue-800 mb-1 flex items-center gap-2"><i class="fa-solid fa-handshake text-blue-500"></i> Confianza y Transparencia</h4>
+                        <p class="text-sm text-gray-600">Construimos relaciones a largo plazo. Ofrecemos información clara sobre la procedencia y composición de nuestros productos y garantizamos que el rendimiento prometido se cumpla, generando la tranquilidad de invertir en lo mejor.</p>
+                    </div>
+                    <!-- Valor 3: Innovación Constante -->
+                    <div class="bg-blue-50 p-4 rounded-lg shadow-sm border border-blue-200">
+                        <h4 class="font-bold text-lg text-blue-800 mb-1 flex items-center gap-2"><i class="fa-solid fa-lightbulb text-blue-500"></i> Innovación Constante</h4>
+                        <p class="text-sm text-gray-600">No nos conformamos con lo actual. Buscamos continuamente mejorar, integrar tecnología y diseño ergonómico para que nuestros artículos de limpieza no solo sean efectivos, sino también cómodos y eficientes de usar.</p>
+                    </div>
+                    <!-- Valor 4: Enfoque al Cliente Premium -->
+                    <div class="bg-blue-50 p-4 rounded-lg shadow-sm border border-blue-200">
+                        <h4 class="font-bold text-lg text-blue-800 mb-1 flex items-center gap-2"><i class="fa-solid fa-crown text-blue-500"></i> Enfoque al Cliente Premium</h4>
+                        <p class="text-sm text-gray-600">Entendemos y atendemos las necesidades del cliente que busca lo mejor. Estamos dedicados a escuchar sus comentarios para ofrecer una experiencia de compra y uso que refleje la alta calidad de nuestros productos.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Sección de Ubicación/Contacto -->
+    <section id="ubicacion" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 fade-in-section">
+                <h2 class="text-blue-600 font-semibold tracking-wide uppercase text-sm">Contáctanos</h2>
+                <h3 class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+                    Solicita tu Pedido a Domicilio
+                </h3>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+                <!-- Columna 1: Contacto Rápido -->
+                <div class="lg:col-span-1 bg-gray-50 p-8 rounded-xl shadow-lg fade-in-section">
+                    <h4 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2"><i class="fa-solid fa-address-book text-blue-500"></i> Información de Contacto</h4>
+                    <ul class="space-y-4 text-gray-600">
+                        <!-- Se eliminó la dirección física -->
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-phone text-blue-500 text-xl"></i>
+                            <a href="tel:+526561010854" class="hover:text-blue-700 font-semibold">(656) 101-0854</a>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-brands fa-whatsapp text-green-500 text-xl"></i>
+                            <a href="https://wa.me/526561010854?text=Hola,%20me%20interesa%20información%20sobre%20sus%20productos" target="_blank" class="hover:text-green-700 font-semibold">Enviar WhatsApp</a>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-regular fa-clock text-blue-500 text-xl"></i>
+                            <!-- Horario de entrega actualizado -->
+                            <span class="font-semibold text-gray-800">Horario de Entregas:</span> 10:00 AM - 6:00 PM (Lunes a Sábado)
+                        </li>
+                    </ul>
+                </div>
+                <!-- Columna 2: Mensaje de Entrega a Domicilio (Reemplazo del Mapa) -->
+                <div class="lg:col-span-2 rounded-xl shadow-xl overflow-hidden fade-in-section bg-blue-600 flex items-center justify-center text-white p-10" style="transition-delay: 150ms;">
+                    <div class="text-center">
+                        <i class="fa-solid fa-truck-fast text-6xl mb-4"></i>
+                        <h4 class="text-3xl font-bold mb-3">¡Solo Entregas a Domicilio!</h4>
+                        <p class="text-xl font-light">Llevamos la nueva era de la limpieza directamente a tu puerta, sin costo adicional. Haz tu pedido por WhatsApp o teléfono.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Botones Flotantes -->
+    <div class="floating-container">
+        <!-- Botón de WhatsApp -->
+        <a href="https://wa.me/526561010854?text=Hola,%20quisiera%20hacer%20una%20consulta%20sobre%20el%20catálogo." target="_blank" class="floating-btn btn-whatsapp" title="WhatsApp">
+            <i class="fa-brands fa-whatsapp"></i>
+        </a>
+        <!-- Botón de Llamada -->
+        <a href="tel:+526561010854" class="floating-btn btn-phone" title="Llamar">
+            <i class="fa-solid fa-phone"></i>
+        </a>
+    </div>
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p>&copy; 2024 NextGen Limpieza. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+    <!-- Script para Animaciones y Menú Móvil -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Intersection Observer para animaciones fade-in
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                rootMargin: '0px',
+                threshold: 0.1 
+            });
+            document.querySelectorAll('.fade-in-section').forEach(section => {
+                observer.observe(section);
+            });
+            // Lógica para el menú móvil
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                const icon = mobileMenuBtn.querySelector('i');
+                if (mobileMenu.classList.contains('hidden')) {
+                    icon.classList.remove('fa-xmark');
+                    icon.classList.add('fa-bars');
+                } else {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-xmark');
+                }
+            });
+            // Cerrar menú móvil al hacer clic en un enlace
+            document.querySelectorAll('#mobile-menu a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                    mobileMenuBtn.querySelector('i').classList.remove('fa-xmark');
+                    mobileMenuBtn.querySelector('i').classList.add('fa-bars');
+                });
+            });
+            // Navbar shadow on scroll
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('shadow-xl');
+                    navbar.classList.add('bg-white/95');
+                    navbar.classList.add('backdrop-blur-sm');
+                } else {
+                    navbar.classList.remove('shadow-xl');
+                    navbar.classList.remove('bg-white/95');
+                    navbar.classList.remove('backdrop-blur-sm');
+                }
+            });
+        });
+    </script>
+ </body>
+ </html
